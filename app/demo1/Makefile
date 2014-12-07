@@ -31,9 +31,9 @@ F_CPU=16000000
 CFLAGS = -mmcu=$(MCU) -Wall -g -Os  -lm  -mcall-prologues -DF_CPU=$(F_CPU)
 LDFLAGS = -mmcu=$(MCU)  -Wall -g -Os  
  
-all: $(TARGET)
+all: $(TARGET) size
  
-$(TARGET): $(OBJECTS)
+$(TARGET): $(OBJECTS) 
 	$(CC) $(LDFLAGS) -o $@.elf  $(OBJECTS) -lm
 #	$(OBJCOPY) -O binary -R .eeprom -R .nwram  $@.elf $@.bin
 	$(OBJCOPY) -O ihex -R .eeprom -R .nwram  $@.elf $@.hex
@@ -44,6 +44,17 @@ $(TARGET): $(OBJECTS)
 clean:
 	rm -fv *.elf *.bin *.hex  $(OBJECTS) *.map $(PLATFORM_DIR)/*.o
 
+	
+
+SIZE = avr-size
+ELFSIZE1 = $(SIZE)  -A $(TARGET).elf
+ELFSIZE2 = $(SIZE) --format=avr --mcu=$(MCU) $(TARGET).elf
+size:
+	@if [ -f $(TARGET).elf ]; then echo; $(ELFSIZE1); $(ELFSIZE2); echo; fi	
+	
 boot:
 	avrdude -p$(DUDE_AVR_DEVICE) -c$(DUDE_PROGRAMMER) \
 	-P$(DUDE_PORT) -b$(DUDE_BAUDRATE) -Uflash:w:$(TARGET).hex:a
+	
+	
+	
