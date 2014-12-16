@@ -15,8 +15,7 @@ SRCS+= $(PLATFORM_DIR)/uart.c
 # Настройки avrdude
 DUDE_PROGRAMMER = avr911
 DUDE_PORT = /dev/ttyUSB0
-DUDE_PORT = /dev/ttyUSB0
-DUDE_BAUDRATE = 19200
+DUDE_BAUDRATE = 115200
 DUDE_AVR_DEVICE = m128rfa1
  
 OBJECTS = $(SRCS:.c=.o)
