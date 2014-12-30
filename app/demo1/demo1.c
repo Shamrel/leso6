@@ -27,13 +27,12 @@ the source code.
 #include <stdio.h>
 #include <util/delay.h>
 
-#include "../../platform/lcd.h"
-#include "../../platform/gpio.h"
-#include "../../platform/uart.h"
-#include "../../platform/rtc.h"
-#include "../../platform/i2c.h"
-
-#include "../../platform/ds18b20.h"
+#include "lcd.h"
+#include "gpio.h"
+#include "uart.h"
+#include "rtc.h"
+#include "i2c.h"
+#include "ds18b20.h"
 
 
 /**
@@ -45,7 +44,8 @@ the source code.
 #define  LED2    PORTF, 2, H
 #define  LED3    PORTF, 3, H
 
-#define  BIP     PORTB, 0, H	//!< Излучатель звука.
+#define  BIP     PORTB, 0, H
+//!< Излучатель звука.
 
 /**
  \brief  Определения для клавиатуры.

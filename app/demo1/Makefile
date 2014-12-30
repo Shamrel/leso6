@@ -28,6 +28,7 @@ F_CPU=16000000
  
 # Флаги компилятора
 CFLAGS = -mmcu=$(MCU) -Wall -g -Os  -lm  -mcall-prologues -DF_CPU=$(F_CPU)
+CFLAGS += -I$(PLATFORM_DIR) 
 LDFLAGS = -mmcu=$(MCU)  -Wall -g -Os  
  
 all: $(TARGET) size
