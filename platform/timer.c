@@ -20,7 +20,8 @@ the source code.
 #include "timer.h"
 #include <avr/io.h>
 
-// Timer 0
+#if USE_TIMER_0
+
 void start_timer_0(CLOCK_t clk);
 void stop_timer_0();
 void set_timer_0_mode(TIMER_MODE_t mode);
@@ -28,80 +29,12 @@ uint8_t getTimer0CNT();
 void setTimer0InterruptFlag(uint8_t interrupt);
 void clearTimer0InterruptFlag(uint8_t interrupt);
 uint8_t checkTimer0InterruptFlag(uint8_t interrupt);
+#if USE_PWM_TIMER_0
 void timer0PWM_B(PORT_MODE_t mode);
 void timer0PWM_A(PORT_MODE_t mode);
+#endif
 void setCNT_Timer0(uint8_t cnt);
 void clear_reg_0();
-
-// Timer 1
-void start_timer_1(CLOCK_t clk);
-void stop_timer_1();
-void set_timer_1_mode(TIMER_MODE_t mode);
-uint16_t getTimer1CNT();
-void setTimer1InterruptFlag(uint8_t interrupt);
-void clearTimer1InterruptFlag(uint8_t interrupt);
-uint8_t checkTimer1InterruptFlag(uint8_t interrupt);
-void timer1PWM_C(PORT_MODE_t mode);
-void timer1PWM_B(PORT_MODE_t mode);
-void timer1PWM_A(PORT_MODE_t mode);
-void setCNT_Timer1(uint16_t cnt);
-void clear_reg_1();
-
-// Timer 2
-void start_timer_2(CLOCK_t clk);
-void stop_timer_2();
-void set_timer_2_mode(TIMER_MODE_t mode);
-uint8_t getTimer2CNT();
-void setTimer2InterruptFlag(uint8_t interrupt);
-void clearTimer2InterruptFlag(uint8_t interrupt);
-uint8_t checkTimer2InterruptFlag(uint8_t interrupt);
-void timer2PWM_A(PORT_MODE_t mode);
-void async_mode_on();
-void async_mode_off();
-void setCNT_Timer2(uint8_t cnt);
-void clear_reg_2();
-
-// Timer 3
-void start_timer_3(CLOCK_t clk);
-void stop_timer_3();
-void set_timer_3_mode(TIMER_MODE_t mode);
-uint16_t getTimer3CNT();
-void setTimer3InterruptFlag(uint8_t interrupt);
-void clearTimer3InterruptFlag(uint8_t interrupt);
-uint8_t checkTimer3InterruptFlag(uint8_t interrupt);
-void timer3PWM_C(PORT_MODE_t mode);
-void timer3PWM_B(PORT_MODE_t mode);
-void timer3PWM_A(PORT_MODE_t mode);
-void setCNT_Timer3(uint16_t cnt);
-void clear_reg_3();
-
-// Timer 4
-void start_timer_4(CLOCK_t clk);
-void stop_timer_4();
-void set_timer_4_mode(TIMER_MODE_t mode);
-uint16_t getTimer4CNT();
-void setTimer4InterruptFlag(uint8_t interrupt);
-void clearTimer4InterruptFlag(uint8_t interrupt);
-uint8_t checkTimer4InterruptFlag(uint8_t interrupt);
-void timer4PWM_C(PORT_MODE_t mode);
-void timer4PWM_B(PORT_MODE_t mode);
-void timer4PWM_A(PORT_MODE_t mode);
-void setCNT_Timer4(uint16_t cnt);
-void clear_reg_4();
-
-// Timer 5
-void start_timer_5(CLOCK_t clk);
-void stop_timer_5();
-void set_timer_5_mode(TIMER_MODE_t mode);
-uint16_t getTimer5CNT();
-void setTimer5InterruptFlag(uint8_t interrupt);
-void clearTimer5InterruptFlag(uint8_t interrupt);
-uint8_t checkTimer5InterruptFlag(uint8_t interrupt);
-void timer5PWM_C(PORT_MODE_t mode);
-void timer5PWM_B(PORT_MODE_t mode);
-void timer5PWM_A(PORT_MODE_t mode);
-void setCNT_Timer5(uint16_t cnt);
-void clear_reg_5();
 
 Timer0_obj timer_0 = {
 	start_timer_0,
@@ -111,85 +44,12 @@ Timer0_obj timer_0 = {
 	clearTimer0InterruptFlag,
 	getTimer0CNT,
 	checkTimer0InterruptFlag,
+#if USE_PWM_TIMER_0
 	timer0PWM_B,
 	timer0PWM_A,
+#endif
 	setCNT_Timer0,
 	clear_reg_0
-};
-
-Timer1_obj timer_1 = {
-	start_timer_1,
-	stop_timer_1,
-	set_timer_1_mode,
-	setTimer1InterruptFlag,
-	clearTimer1InterruptFlag,
-	getTimer1CNT,
-	checkTimer1InterruptFlag,
-	timer1PWM_C,
-	timer1PWM_B,
-	timer1PWM_A,
-	setCNT_Timer1,
-	clear_reg_1
-};
-
-Timer2_obj timer_2 = {
-	start_timer_2,
-	stop_timer_2,
-	set_timer_2_mode,
-	setTimer2InterruptFlag,
-	clearTimer2InterruptFlag,
-	getTimer2CNT,
-	checkTimer2InterruptFlag,
-	timer2PWM_A,
-	async_mode_on,
-	async_mode_off,
-	setCNT_Timer2,
-	clear_reg_2
-};
-
-Timer1_obj timer_3 = {
-	start_timer_3,
-	stop_timer_3,
-	set_timer_3_mode,
-	setTimer3InterruptFlag,
-	clearTimer3InterruptFlag,
-	getTimer3CNT,
-	checkTimer3InterruptFlag,
-	timer3PWM_C,
-	timer3PWM_B,
-	timer3PWM_A,
-	setCNT_Timer3,
-	clear_reg_3
-};
-
-Timer1_obj timer_4 = {
-	start_timer_4,
-	stop_timer_4,
-	set_timer_4_mode,
-	setTimer4InterruptFlag,
-	clearTimer4InterruptFlag,
-	getTimer4CNT,
-	checkTimer4InterruptFlag,
-	timer4PWM_C,
-	timer4PWM_B,
-	timer4PWM_A,
-	setCNT_Timer4,
-	clear_reg_4
-};
-
-Timer1_obj timer_5 = {
-	start_timer_5,
-	stop_timer_5,
-	set_timer_5_mode,
-	setTimer5InterruptFlag,
-	clearTimer5InterruptFlag,
-	getTimer5CNT,
-	checkTimer5InterruptFlag,
-	timer5PWM_C,
-	timer5PWM_B,
-	timer5PWM_A,
-	setCNT_Timer5,
-	clear_reg_5
 };
 
 // ========================================================================
@@ -252,6 +112,8 @@ uint8_t checkTimer0InterruptFlag(uint8_t interrupt)
 	return 0;
 }
 
+#if USE_PWM_TIMER_0
+
 void timer0PWM_B(PORT_MODE_t mode)
 {
 	DDRG |= (1<<5); // Pin 19 Out mode
@@ -263,6 +125,8 @@ void timer0PWM_A(PORT_MODE_t mode)
 	DDRB |= (1<<7); // Pin 43 Out mode
 	TCCR0A |= (TO_INT(mode))<<COM0A;
 }
+
+#endif
 
 void setCNT_Timer0(uint8_t cnt)
 {
@@ -276,6 +140,42 @@ void clear_reg_0()
 	TCCR0B = 0;
 	TIMSK0 = 0;
 }
+
+#endif
+
+#if USE_TIMER_1
+
+void start_timer_1(CLOCK_t clk);
+void stop_timer_1();
+void set_timer_1_mode(TIMER_MODE_t mode);
+uint16_t getTimer1CNT();
+void setTimer1InterruptFlag(uint8_t interrupt);
+void clearTimer1InterruptFlag(uint8_t interrupt);
+uint8_t checkTimer1InterruptFlag(uint8_t interrupt);
+#if USE_PWM_TIMER_1_3_4_5
+void timer1PWM_C(PORT_MODE_t mode);
+void timer1PWM_B(PORT_MODE_t mode);
+void timer1PWM_A(PORT_MODE_t mode);
+#endif
+void setCNT_Timer1(uint16_t cnt);
+void clear_reg_1();
+
+Timer1_obj timer_1 = {
+	start_timer_1,
+	stop_timer_1,
+	set_timer_1_mode,
+	setTimer1InterruptFlag,
+	clearTimer1InterruptFlag,
+	getTimer1CNT,
+	checkTimer1InterruptFlag,
+#if USE_PWM_TIMER_1_3_4_5
+	timer1PWM_C,
+	timer1PWM_B,
+	timer1PWM_A,
+#endif
+	setCNT_Timer1,
+	clear_reg_1
+};
 
 // ========================================================================
 //                         Timer 1
@@ -353,6 +253,8 @@ uint8_t checkTimer1InterruptFlag(uint8_t interrupt)
 	return 0;
 }
 
+#if USE_PWM_TIMER_1_3_4_5
+
 void timer1PWM_C(PORT_MODE_t mode)
 {
 	DDRB |= 1<<PB7; // Pin 43
@@ -371,6 +273,8 @@ void timer1PWM_A(PORT_MODE_t mode)
 	TCCR1A |= (TO_INT(mode))<<COM0A;
 }
 
+#endif
+
 void setCNT_Timer1(uint16_t cnt)
 {
 	TCNT1 = cnt;
@@ -384,6 +288,41 @@ void clear_reg_1()
 	TIMSK1 = 0;
 }
 
+#endif
+
+#if USE_TIMER_2
+
+void start_timer_2(CLOCK_t clk);
+void stop_timer_2();
+void set_timer_2_mode(TIMER_MODE_t mode);
+uint8_t getTimer2CNT();
+void setTimer2InterruptFlag(uint8_t interrupt);
+void clearTimer2InterruptFlag(uint8_t interrupt);
+uint8_t checkTimer2InterruptFlag(uint8_t interrupt);
+#if USE_PWM_TIMER_2
+void timer2PWM_A(PORT_MODE_t mode);
+#endif
+void async_mode_on();
+void async_mode_off();
+void setCNT_Timer2(uint8_t cnt);
+void clear_reg_2();
+
+Timer2_obj timer_2 = {
+	start_timer_2,
+	stop_timer_2,
+	set_timer_2_mode,
+	setTimer2InterruptFlag,
+	clearTimer2InterruptFlag,
+	getTimer2CNT,
+	checkTimer2InterruptFlag,
+#if USE_PWM_TIMER_2
+	timer2PWM_A,
+#endif
+	async_mode_on,
+	async_mode_off,
+	setCNT_Timer2,
+	clear_reg_2
+};
 
 // ========================================================================
 //                         Timer 2
@@ -445,11 +384,15 @@ uint8_t checkTimer2InterruptFlag(uint8_t interrupt)
 	return 0;
 }
 
+#if USE_PWM_TIMER_2
+
 void timer2PWM_A(PORT_MODE_t mode)
 {
 	DDRB |= (1<<PB4); // Pin 40 Out mode
 	TCCR2A |= (TO_INT(mode))<<COM0A;
 }
+
+#endif
 
 void async_mode_on()
 {
@@ -473,6 +416,42 @@ void clear_reg_2()
 	TCCR2B = 0;
 	TIMSK2 = 0;
 }
+
+#endif
+
+#if USE_TIMER_3
+
+void start_timer_3(CLOCK_t clk);
+void stop_timer_3();
+void set_timer_3_mode(TIMER_MODE_t mode);
+uint16_t getTimer3CNT();
+void setTimer3InterruptFlag(uint8_t interrupt);
+void clearTimer3InterruptFlag(uint8_t interrupt);
+uint8_t checkTimer3InterruptFlag(uint8_t interrupt);
+#if USE_PWM_TIMER_1_3_4_5
+void timer3PWM_C(PORT_MODE_t mode);
+void timer3PWM_B(PORT_MODE_t mode);
+void timer3PWM_A(PORT_MODE_t mode);
+#endif
+void setCNT_Timer3(uint16_t cnt);
+void clear_reg_3();
+
+Timer1_obj timer_3 = {
+	start_timer_3,
+	stop_timer_3,
+	set_timer_3_mode,
+	setTimer3InterruptFlag,
+	clearTimer3InterruptFlag,
+	getTimer3CNT,
+	checkTimer3InterruptFlag,
+#if USE_PWM_TIMER_1_3_4_5
+	timer3PWM_C,
+	timer3PWM_B,
+	timer3PWM_A,
+#endif
+	setCNT_Timer3,
+	clear_reg_3
+};
 
 
 // ========================================================================
@@ -551,6 +530,8 @@ uint8_t checkTimer3InterruptFlag(uint8_t interrupt)
 	return 0;
 }
 
+#if USE_PWM_TIMER_1_3_4_5
+
 void timer3PWM_C(PORT_MODE_t mode)
 {
 	DDRE |= 1<<PE5; // Pin 51
@@ -569,6 +550,8 @@ void timer3PWM_A(PORT_MODE_t mode)
 	TCCR3A |= (TO_INT(mode))<<COM0A;
 }
 
+#endif
+
 void setCNT_Timer3(uint16_t cnt)
 {
 	TCNT3 = cnt;
@@ -582,6 +565,41 @@ void clear_reg_3()
 	TIMSK3 = 0;
 }
 
+#endif
+
+#if USE_TIMER_4
+
+void start_timer_4(CLOCK_t clk);
+void stop_timer_4();
+void set_timer_4_mode(TIMER_MODE_t mode);
+uint16_t getTimer4CNT();
+void setTimer4InterruptFlag(uint8_t interrupt);
+void clearTimer4InterruptFlag(uint8_t interrupt);
+uint8_t checkTimer4InterruptFlag(uint8_t interrupt);
+#if USE_PWM_TIMER_1_3_4_5
+void timer4PWM_C(PORT_MODE_t mode);
+void timer4PWM_B(PORT_MODE_t mode);
+void timer4PWM_A(PORT_MODE_t mode);
+#endif
+void setCNT_Timer4(uint16_t cnt);
+void clear_reg_4();
+
+Timer1_obj timer_4 = {
+	start_timer_4,
+	stop_timer_4,
+	set_timer_4_mode,
+	setTimer4InterruptFlag,
+	clearTimer4InterruptFlag,
+	getTimer4CNT,
+	checkTimer4InterruptFlag,
+#if USE_PWM_TIMER_1_3_4_5
+	timer4PWM_C,
+	timer4PWM_B,
+	timer4PWM_A,
+#endif
+	setCNT_Timer4,
+	clear_reg_4
+};
 
 // ========================================================================
 //                         Timer 4
@@ -659,6 +677,8 @@ uint8_t checkTimer4InterruptFlag(uint8_t interrupt)
 	return 0;
 }
 
+#if USE_PWM_TIMER_1_3_4_5
+
 void timer4PWM_C(PORT_MODE_t mode)
 {
 	DDRB |= 1<<PB7; // Pin 43
@@ -677,6 +697,8 @@ void timer4PWM_A(PORT_MODE_t mode)
 	TCCR4A |= (TO_INT(mode))<<COM0A;
 }
 
+#endif
+
 void setCNT_Timer4(uint16_t cnt)
 {
 	TCNT4 = cnt;
@@ -690,6 +712,41 @@ void clear_reg_4()
 	TIMSK4 = 0;
 }
 
+#endif
+
+#if USE_TIMER_5
+
+void start_timer_5(CLOCK_t clk);
+void stop_timer_5();
+void set_timer_5_mode(TIMER_MODE_t mode);
+uint16_t getTimer5CNT();
+void setTimer5InterruptFlag(uint8_t interrupt);
+void clearTimer5InterruptFlag(uint8_t interrupt);
+uint8_t checkTimer5InterruptFlag(uint8_t interrupt);
+#if USE_PWM_TIMER_1_3_4_5
+void timer5PWM_C(PORT_MODE_t mode);
+void timer5PWM_B(PORT_MODE_t mode);
+void timer5PWM_A(PORT_MODE_t mode);
+#endif
+void setCNT_Timer5(uint16_t cnt);
+void clear_reg_5();
+
+Timer1_obj timer_5 = {
+	start_timer_5,
+	stop_timer_5,
+	set_timer_5_mode,
+	setTimer5InterruptFlag,
+	clearTimer5InterruptFlag,
+	getTimer5CNT,
+	checkTimer5InterruptFlag,
+#if USE_PWM_TIMER_1_3_4_5
+	timer5PWM_C,
+	timer5PWM_B,
+	timer5PWM_A,
+#endif
+	setCNT_Timer5,
+	clear_reg_5
+};
 
 // ========================================================================
 //                         Timer 5
@@ -767,6 +824,8 @@ uint8_t checkTimer5InterruptFlag(uint8_t interrupt)
 	return 0;
 }
 
+#if USE_PWM_TIMER_1_3_4_5
+
 void timer5PWM_C(PORT_MODE_t mode)
 {
 	DDRB |= 1<<PB7; // Pin 43
@@ -785,6 +844,8 @@ void timer5PWM_A(PORT_MODE_t mode)
 	TCCR5A |= (TO_INT(mode))<<COM0A;
 }
 
+#endif
+
 void setCNT_Timer5(uint16_t cnt)
 {
 	TCNT5 = cnt;
@@ -798,3 +859,4 @@ void clear_reg_5()
 	TIMSK5 = 0;
 }
 
+#endif

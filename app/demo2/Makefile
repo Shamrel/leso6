@@ -28,9 +28,10 @@ MCU=atmega128rfa1
 F_CPU=16000000
  
 # Флаги компилятора
-CFLAGS = -mmcu=$(MCU) -Wall -g -Os  -lm  -mcall-prologues -DF_CPU=$(F_CPU)
+CFLAGS = -mmcu=$(MCU) -Wall -g -O1  -lm  -mcall-prologues -DF_CPU=$(F_CPU)
+CFLAGS += -D__AVR_ATmega128RFA1__
 CFLAGS += -I$(PLATFORM_DIR) 
-LDFLAGS = -mmcu=$(MCU)  -Wall -g -Os  
+LDFLAGS = -mmcu=$(MCU)  -Wall -g -O1  
  
 all: $(TARGET) size
  
