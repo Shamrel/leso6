@@ -28,6 +28,8 @@ F_CPU=16000000
  
 # Флаги компилятора
 CFLAGS = -mmcu=$(MCU) -Wall -g -Os  -lm  -mcall-prologues -DF_CPU=$(F_CPU)
+# Нужно исключительно для индексации в Eclipse
+CFLAGS += -D__AVR_ATmega128RFA1__
 CFLAGS += -I$(PLATFORM_DIR) 
 LDFLAGS = -mmcu=$(MCU)  -Wall -g -Os  
  
