@@ -148,6 +148,7 @@ UCSRxA |= (1 << U2Xx);
 #ifdef USE_STDERR
 	stderr = &uart_output;	// назначаем поток вывода ошибок
 #endif
+	sei();	// Разрешаем прерывания
 }
 
 #ifdef USE_STDOUT
